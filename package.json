@@ -1,0 +1,25 @@
+{
+  "name": "ts-ng-amd",
+  "version": "1.0.0",
+  "description": "TS + Angular + RequireJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "dts-generator": "^1.5.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-ts": "^5.1.0",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.15",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-requirejs": "^0.2.2",
+    "phantomjs": "^1.9.18",
+    "requirejs": "^2.1.20"
+  }
+}

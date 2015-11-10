@@ -1,0 +1,23 @@
+{
+  "name": "ts-ng-amd",
+  "version": "1.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angular#~1.4.6",
+    "angular-ui-router": "~0.2.15",
+    "jquery": "components/jquery#~2.1.4",
+    "oclazyload": "~1.0.6",
+    "requirejs": "~2.1.20",
+    "ui-router-extras": "~0.1.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.7"
+  }
+}

@@ -1,0 +1,12 @@
+{
+	"exclude": [
+		"src/interface", 
+		"src/.baseDir.ts", 
+		"src/reference.ts", 
+		".tscache", 
+		"node_modules", 
+		"bower_components", 
+		"typings",
+		"unit-test"
+	]
+}
