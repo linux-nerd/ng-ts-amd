@@ -29,30 +29,46 @@ module.exports = function (grunt) {
                 src: ["src/**/*.ts"],          // The source typescript files, http://gruntjs.com/configuring-tasks#files
                 html: ['src/**/**.tpl.html'],  // The source html files, https://github.com/basarat/grunt-ts#html-2-typescript-support
                 //reference: 'src/reference.ts', // If specified, generate this file that you can use for your reference management
-                outDir: 'target',             // If specified, generate an out.js file which is the merged js file
+                outDir: 'dist',             // If specified, generate an out.js file which is the merged js file
                 //watch: 'src',                  // If specified, watches this directory for changes, and re-runs the current target
                 // use to override the grunt-ts project options above for this target
                 options: {
-                    module: 'amd'
+                    module: 'amd',
+                    inlineSources: true,
+                    inlineSourceMap: true
                 }
             },
-            test: {
-                src: ["unit-test/testSrc/**/*.spec.ts"],          // The source typescript files, http://gruntjs.com/configuring-tasks#files
-                out: 'unit-test/dist/out.spec.js',             // If specified, generate an out.js file which is the merged js file
-                // use to override the grunt-ts project options above for this target
+            release: {
+                src: ["src/**/*.ts"],
+                outDir: 'release',
                 options: {
-                    module: 'amd'
+                    module: "amd",
                 }
             }
         },
         
         //task to copy html files to the target/release folder
         copy: {
-            files: {
+            dist: {
                 cwd: 'src',  // set working folder / root to copy
                 src: '**/*.html',      // copy all files and subfolders **with ending .html**
-                dest: 'target',    // destination folder
+                dest: 'dist',    // destination folder
                 expand: true           // required when using cwd
+            },
+            release: {
+                cwd: 'src',  // set working folder / root to copy
+                src: '**/*.html',      // copy all files and subfolders **with ending .html**
+                dest: 'release',    // destination folder
+                expand: true,           // required when using cwd
+                options: {
+                    process: function(content, srcPath){
+                        if(srcPath === "src/index.html"){
+                            return content.replace("../bower_components/requirejs", "vendor/scripts");
+                        }else{
+                            return content;
+                        }                      
+                    }
+                }
             }
         },
 
@@ -69,17 +85,106 @@ module.exports = function (grunt) {
                 files: ["src/**/*.ts", "src/**/*.html"],
                 tasks: ["ts:dev", "copyHtml"]
             }
+        },
+
+        //uglify files
+        uglify: {
+            release: {
+                files: [{
+                    expand: true,
+                    cwd: 'release',
+                    src: "**/*.js",
+                    dest: "release"
+                }]
+            }
+        },
+
+        //clean the release folder
+        clean: {
+            release: ["release/**/*.js", "release/**/*.html"]
+        },
+
+        //remove unwanted files and directories from the release folder
+        remove: {
+            options: {
+                trace: true
+            },
+            release: {
+                fileList: ['release/.baseDir.js'],
+                dirList: ['release/unit-test']
+            }
+        },
+
+        //copy vendor files from bower_components to vendors
+        bowercopy: {
+            scripts: {
+                options: {
+                    destPrefix: 'release/vendor/scripts'
+                },
+                files: {
+                    "jquery.min.js": "jquery/jquery.min.js",
+                    "require.js": "requirejs/require.js",
+                    "bootstrap.min.js": "bootstrap/dist/js/bootstrap.min.js",
+                    "angular.min.js": "angular/angular.min.js",
+                    "angular-ui-router.min.js": "angular-ui-router/release/angular-ui-router.min.js",
+                    "ocLazyLoad.min.js": "oclazyload/dist/ocLazyLoad.min.js"
+                }
+            },
+            css: {
+                options: {
+                    destPrefix: "release/vendor/style/css"
+                },
+                files: {
+                    "bootstrap.min.css": "bootstrap/dist/css/bootstrap.min.css"
+                }
+            },
+            folders: {
+                options: {
+                    destPrefix: "release/vendor/style"
+                },
+                files:{
+                    "fonts": "bootstrap/dist/fonts"
+                }
+            } 
+        },
+        replace: {
+            release: {
+                src: ['release/requireConfig.js'],
+                overwrite: true,
+                replacements: [{
+                    from: "../bower_components/jquery/jquery",
+                    to: "vendor/scripts/jquery.min"
+                }, {
+                    from: "../bower_components/bootstrap/dist/js/bootstrap",
+                    to: "vendor/scripts/bootstrap.min"
+                }, {
+                    from: "../bower_components/angular/angular",
+                    to: "vendor/scripts/angular.min"
+                }, {
+                    from: "../bower_components/angular-ui-router/release/angular-ui-router",
+                    to: "vendor/scripts/angular-ui-router.min"
+                }, {
+                    from: "../bower_components/oclazyload/dist/ocLazyLoad",
+                    to: "vendor/scripts/ocLazyLoad.min"
+                }]
+            }
         }
     });
 
     grunt.loadNpmTasks("grunt-ts");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-remove');
+    grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('dts-generator');
     
     grunt.registerTask("generateDts", ["dtsGenerator"]);
-    grunt.registerTask("copyHtml", ["copy"]);
-    grunt.registerTask("default", ["copyHtml", "ts:dev", "watch:dev"]);
+    //grunt.registerTask("copyHtml", ["copy"]);
+    grunt.registerTask("default", ["copy:dist", "ts:dev", "watch:dev"]);
+    grunt.registerTask("release", ["clean:release", "ts:release", "bowercopy", "uglify:release", "copy:release", "remove:release", "replace:release"])
     //grunt.registerTask("test", ["ts:test"]);
 
 }

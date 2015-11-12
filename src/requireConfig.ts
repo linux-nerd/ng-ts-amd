@@ -4,14 +4,17 @@
 require.config({
     paths: {
         "jquery": "../bower_components/jquery/jquery",
+        "bootstrap": "../bower_components/bootstrap/dist/js/bootstrap",
         "angular": "../bower_components/angular/angular",
         "uiRouter": "../bower_components/angular-ui-router/release/angular-ui-router",
-        "ocLazyload": "../bower_components/oclazyload/dist/ocLazyLoad",
-        "uiRouterExtras": "../bower_components/ui-router-extras/release/ct-ui-router-extras"
+        "ocLazyload": "../bower_components/oclazyload/dist/ocLazyLoad"
     },
     shim: {
         "angular": {
             exports: "angular",
+            deps: ["jquery"]
+        },
+        "bootstrap": {
             deps: ["jquery"]
         },
         "uiRouter": {
@@ -19,9 +22,6 @@ require.config({
         },
         "ocLazyload": {
             deps: ["angular"]
-        },
-        "uiRouterExtras": {
-            deps: ["uiRouter"]
         }
     }
 });

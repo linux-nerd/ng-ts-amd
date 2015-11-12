@@ -16,14 +16,21 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test-main.js',
-      {pattern: "bower_components/**/*.js", included: false},
-      {pattern: 'target/**/*.js', included: false},
-      {pattern: 'target/unit-test/**/*.spec.js', included: false}
+      "bower_components/requirejs/require.js",
+      "bower_components/jquery/jquery.js",
+      "bower_components/bootstrap/dist/js/bootstrap.js",
+      "bower_components/angular/angular.js",
+      "bower_components/angular-ui-router/release/angular-ui-router.js",
+      "bower_components/oclazyload/dist/ocLazyLoad.js",
+      "bower_components/angular-mocks/angular-mocks.js",
+      {pattern: 'dist/**/*.js', included: false},
+      {pattern: 'dist/unit-test/**/*.spec.js', included: false}
     ],
 
 
     // list of files to exclude
     exclude: [
+
     ],
 
 
