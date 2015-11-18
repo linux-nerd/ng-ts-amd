@@ -7,9 +7,9 @@ import bootStrapApp from "./bootstrap-app";
 import "./components/common/module";
 
 
-//create angular module webApp
-//with ui.router, oc.lazyLoad as dependencies.
-let app: ng.IModule = angular.module("webApp", ['ui.router', 'oc.lazyLoad', 'common']);
+// create angular module webApp
+// with ui.router, oc.lazyLoad as dependencies.
+let app: ng.IModule = angular.module("webApp", ["ui.router", "oc.lazyLoad", "common"]);
 
 app.config(config);
 
@@ -23,7 +23,6 @@ app.config(config);
  * @param {ng.ui.IStateProvider} $stateProvider
  */
 function config($stateProvider: ng.ui.IStateProvider): void {
-   
     $stateProvider
         .state("lcb", {
             url: "/",
@@ -61,7 +60,7 @@ function config($stateProvider: ng.ui.IStateProvider): void {
         });
 }
 
-//inject the dependencies
+// inject the dependencies
 config.$inject = ["$stateProvider"];
 
 bootStrapApp(app);

@@ -35,7 +35,8 @@ module.exports = function (grunt) {
                 options: {
                     module: 'amd',
                     inlineSources: true,
-                    inlineSourceMap: true
+                    inlineSourceMap: true,
+                    declaration: true
                 }
             },
             release: {
@@ -74,8 +75,12 @@ module.exports = function (grunt) {
 
         dtsGenerator: {
             options: {
-                out: 'typings/package.d.ts',
-                src: ['src/app/components/home/**/*.ts']
+                name: 'package-name',
+                project: './',
+                out: 'package-name.d.ts'
+            },
+            default: {
+                src: ['./**/*.ts']
             }
         },
 
@@ -83,7 +88,7 @@ module.exports = function (grunt) {
         watch: {
             dev: {
                 files: ["src/**/*.ts", "src/**/*.html"],
-                tasks: ["ts:dev", "copyHtml"]
+                tasks: ["ts:dev", "copyHtml", "concat", "clean:dev", "tslint"]
             }
         },
 
@@ -101,7 +106,8 @@ module.exports = function (grunt) {
 
         //clean the release folder
         clean: {
-            release: ["release/**/*.js", "release/**/*.html"]
+            release: ["release/**/*.js", "release/**/*.html"],
+            dev: ['dist/**/*.d.ts']
         },
 
         //remove unwanted files and directories from the release folder
@@ -112,6 +118,16 @@ module.exports = function (grunt) {
             release: {
                 fileList: ['release/.baseDir.js'],
                 dirList: ['release/unit-test']
+            }
+        },
+
+        concat: {
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: ['dist/**/*.d.ts'],
+                dest: 'typings/built.d.ts',
             }
         },
 
@@ -168,6 +184,16 @@ module.exports = function (grunt) {
                     to: "vendor/scripts/ocLazyLoad.min"
                 }]
             }
+        },
+
+        //grunt-tslint
+        tslint: {
+            options: {
+                configuration: grunt.file.readJSON('tslint.json')
+            },
+            files: {
+                src: ['src/**/*.ts']
+            }
         }
     });
 
@@ -179,12 +205,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-remove');
     grunt.loadNpmTasks('grunt-bowercopy');
     grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('dts-generator');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    //grunt.loadNpmTasks('dts-generator');
+    grunt.loadNpmTasks('grunt-tslint');
     
     grunt.registerTask("generateDts", ["dtsGenerator"]);
     //grunt.registerTask("copyHtml", ["copy"]);
-    grunt.registerTask("default", ["copy:dist", "ts:dev", "watch:dev"]);
+    grunt.registerTask("default", ["copy:dist", "ts:dev", "concat:dist", "clean:dev", "watch:dev"]);
     grunt.registerTask("release", ["clean:release", "ts:release", "bowercopy", "uglify:release", "copy:release", "remove:release", "replace:release"])
-    //grunt.registerTask("test", ["ts:test"]);
+    grunt.registerTask("lint", ["tslint"]);
 
 }
