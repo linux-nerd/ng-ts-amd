@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start",
-    "preinstall": "bower install && tsd install",
+    "preinstall": "bower install",
     "postinstall": "grunt release"
   },
   "author": "",
