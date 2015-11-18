@@ -1,5 +1,15 @@
 module.exports = function (grunt) {
     "use strict";
+    var fs = require("fs");
+    var files = [];
+    var list = function (path) {
+        fs.readdirSync(path).forEach(function (file) {
+            if(fs.lstatSync(path + '/' +file).isDirectory())
+                list(path + '/' +file);
+            else
+                files.push({name: file});
+        });
+    }
 
     grunt.initConfig({
         ts: {
@@ -56,6 +66,13 @@ module.exports = function (grunt) {
                 dest: 'dist',    // destination folder
                 expand: true           // required when using cwd
             },
+            definitelyTyped: {
+                expand: true, 
+                flatten: true, 
+                src: 'dist/**/*.d.ts', 
+                dest: 'typings/custom',
+                filter: 'isFile'
+            },
             release: {
                 cwd: 'src',  // set working folder / root to copy
                 src: '**/*.html',      // copy all files and subfolders **with ending .html**
@@ -70,17 +87,6 @@ module.exports = function (grunt) {
                         }                      
                     }
                 }
-            }
-        },
-
-        dtsGenerator: {
-            options: {
-                name: 'package-name',
-                project: './',
-                out: 'package-name.d.ts'
-            },
-            default: {
-                src: ['./**/*.ts']
             }
         },
 
@@ -121,16 +127,6 @@ module.exports = function (grunt) {
             }
         },
 
-        concat: {
-            options: {
-                separator: ';'
-            },
-            dist: {
-                src: ['dist/**/*.d.ts'],
-                dest: 'typings/built.d.ts',
-            }
-        },
-
         //copy vendor files from bower_components to vendors
         bowercopy: {
             scripts: {
@@ -163,6 +159,8 @@ module.exports = function (grunt) {
                 }
             } 
         },
+
+        //replace the text of index.html
         replace: {
             release: {
                 src: ['release/requireConfig.js'],
@@ -194,6 +192,22 @@ module.exports = function (grunt) {
             files: {
                 src: ['src/**/*.ts']
             }
+        },
+
+        //create .d.ts file
+        "file-creator": {
+            dev: {
+                "typings/custom.d.ts": function(fs, fd, done){
+                    var createdText = "";
+                    //loop over files variable
+                    files.forEach(function(val, index){
+                        createdText += "///<reference path='./custom/" + val.name + "' />\n"
+                    });
+
+                    fs.writeSync(fd, createdText);
+                    done();
+                }
+            }
         }
     });
 
@@ -205,14 +219,22 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-remove');
     grunt.loadNpmTasks('grunt-bowercopy');
     grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    //grunt.loadNpmTasks('dts-generator');
     grunt.loadNpmTasks('grunt-tslint');
-    
-    grunt.registerTask("generateDts", ["dtsGenerator"]);
-    //grunt.registerTask("copyHtml", ["copy"]);
-    grunt.registerTask("default", ["copy:dist", "ts:dev", "concat:dist", "clean:dev", "watch:dev"]);
-    grunt.registerTask("release", ["clean:release", "ts:release", "bowercopy", "uglify:release", "copy:release", "remove:release", "replace:release"])
+    grunt.loadNpmTasks('grunt-file-creator');
+
+
+    grunt.registerTask("listFiles", 'list files in a dir', function(){
+        list("typings/custom");
+    });
+    grunt.registerTask("generateDts", ["copy:definitelyTyped", "clean:dev", "listFiles"]);
+    grunt.registerTask("updateDts", ["file-creator:dev"]);
+
+    grunt.registerTask("dts", ["generateDts", "updateDts"]);
+
+    grunt.registerTask("default", ["copy:dist", "ts:dev", "dts", "watch:dev"]);
+
+    grunt.registerTask("release", ["clean:release", "ts:release", "bowercopy", "uglify:release", "copy:release", "remove:release", "replace:release"]);
+
     grunt.registerTask("lint", ["tslint"]);
 
 }
