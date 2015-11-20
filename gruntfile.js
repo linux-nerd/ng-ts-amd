@@ -62,9 +62,20 @@ module.exports = function (grunt) {
         copy: {
             dist: {
                 cwd: 'src',  // set working folder / root to copy
-                src: '**/*.html',      // copy all files and subfolders **with ending .html**
+                src: ['**/*.html', '.htaccess'],      // copy all files and subfolders **with ending .html**
                 dest: 'dist',    // destination folder
-                expand: true           // required when using cwd
+                expand: true,           // required when using cwd
+                options: {
+                    process: function(content, srcPath){
+                        if(srcPath === 'src/.htaccess'){
+                            return content.replace("src", "dist");
+                        }else if(srcPath === 'src/index.html'){
+                            return content.replace("/src/", "/dist/");
+                        }else{
+                            return content;
+                        }
+                    }
+                }
             },
             definitelyTyped: {
                 expand: true, 
@@ -75,16 +86,19 @@ module.exports = function (grunt) {
             },
             release: {
                 cwd: 'src',  // set working folder / root to copy
-                src: '**/*.html',      // copy all files and subfolders **with ending .html**
+                src: ['**/*.html', '.htaccess'],      // copy all files and subfolders **with ending .html**
                 dest: 'release',    // destination folder
                 expand: true,           // required when using cwd
                 options: {
                     process: function(content, srcPath){
                         if(srcPath === "src/index.html"){
-                            return content.replace("../bower_components/requirejs", "vendor/scripts");
+                            content.replace("../bower_components/requirejs", "vendor/scripts");
+                            return content.replace("/src/", "/release/");
+                        }else if(srcPath === 'src/.htaccess'){
+                            return content.replace("src", "release");;
                         }else{
                             return content;
-                        }                      
+                        }                     
                     }
                 }
             }

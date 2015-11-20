@@ -22,7 +22,9 @@ app.config(config);
  * 
  * @param {ng.ui.IStateProvider} $stateProvider
  */
-function config($stateProvider: ng.ui.IStateProvider): void {
+function config($stateProvider: ng.ui.IStateProvider, $locationProvider: ng.ILocationProvider): void {
+    $locationProvider.html5Mode(true);
+
     $stateProvider
         .state("lcb", {
             url: "/",
@@ -61,7 +63,7 @@ function config($stateProvider: ng.ui.IStateProvider): void {
 }
 
 // inject the dependencies
-config.$inject = ["$stateProvider"];
+config.$inject = ["$stateProvider", "$locationProvider"];
 
 bootStrapApp(app);
 
