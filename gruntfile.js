@@ -94,7 +94,8 @@ module.exports = function (grunt) {
         watch: {
             dev: {
                 files: ["src/**/*.ts", "src/**/*.html"],
-                tasks: ["ts:dev", "copyHtml", "concat", "clean:dev", "tslint"]
+                tasks: ["copy:dist", "ts:dev", "dts"]
+                //tasks: ["ts:dev", "copyHtml", "concat", "clean:dev"]
             }
         },
 
