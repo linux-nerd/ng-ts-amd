@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "karma start",
-    "preinstall": "bower install",
-    "postinstall": "grunt release"
+    "preinstall": "bower install && tsd install",
+    "postinstall": "grunt"
   },
-  "author": "",
+  "author": "linux-nerd",
   "license": "MIT",
   "devDependencies": {
     "grunt": "^0.4.5",

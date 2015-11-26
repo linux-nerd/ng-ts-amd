@@ -18,8 +18,8 @@ is installed on your system.
 * Apache WebServer is used (XAMPP, WAMP, MAMP, LAMP)
 
 ## Build Process
-* ` npm install ` (will execute ` bower install ` and ` grunt release ` command. And browse through localhost:{port}/ng-ts-amd/release/ and localhost:{port}/ng-ts-amd/release/apple).
-* ` grunt ` (will create dist folder and will watch src folder for any change and will trigger  build on every save. Browse through localhost:{port}/ng-ts-amd/dist/)
+* ` npm install ` (will execute ` bower install `, ` tsd install` and ` grunt ` command. And browse through localhost:{port}/ng-ts-amd/dist/ and localhost:{port}/ng-ts-amd/dist/apple).
+* ` grunt release` (will create release folder . Browse through localhost:{port}/ng-ts-amd/release/)
 
 ## Test
 ` npm test ` (will execute karma start  command and the test  will be executed on PhantomJs)

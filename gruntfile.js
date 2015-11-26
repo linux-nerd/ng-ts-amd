@@ -9,7 +9,7 @@ module.exports = function (grunt) {
             else
                 files.push({name: file});
         });
-    }
+    };
 
     grunt.initConfig({
         ts: {
@@ -17,6 +17,7 @@ module.exports = function (grunt) {
             // these are the default options to the typescript compiler for grunt-ts:
             // see `tsc --help` for a list of supported options.
             options: {
+                experimentalDecorators: true,
                 compile: true,                 // perform compilation. [true (default) | false]
                 comments: false,               // same as !removeComments. [true | false (default)]
                 target: 'es5',                 // target javascript language. [es3 | es5 (grunt-ts default) | es6]
@@ -45,15 +46,14 @@ module.exports = function (grunt) {
                 options: {
                     module: 'amd',
                     inlineSources: true,
-                    inlineSourceMap: true,
-                    declaration: true
+                    inlineSourceMap: true
                 }
             },
             release: {
                 src: ["src/**/*.ts"],
                 outDir: 'release',
                 options: {
-                    module: "amd",
+                    module: "amd"
                 }
             }
         },
@@ -95,7 +95,7 @@ module.exports = function (grunt) {
                             content.replace("../bower_components/requirejs", "vendor/scripts");
                             return content.replace("/src/", "/release/");
                         }else if(srcPath === 'src/.htaccess'){
-                            return content.replace("src", "release");;
+                            return content.replace("src", "release");
                         }else{
                             return content;
                         }                     
@@ -108,7 +108,7 @@ module.exports = function (grunt) {
         watch: {
             dev: {
                 files: ["src/**/*.ts", "src/**/*.html"],
-                tasks: ["copy:dist", "ts:dev", "dts"]
+                tasks: ["copy:dist", "ts:dev"]
                 //tasks: ["ts:dev", "copyHtml", "concat", "clean:dev"]
             }
         },
@@ -215,7 +215,7 @@ module.exports = function (grunt) {
                 "typings/custom.d.ts": function(fs, fd, done){
                     var createdText = "";
                     //loop over files variable
-                    files.forEach(function(val, index){
+                    files.forEach(function(val){
                         createdText += "///<reference path='./custom/" + val.name + "' />\n"
                     });
 
@@ -246,10 +246,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask("dts", ["generateDts", "updateDts"]);
 
-    grunt.registerTask("default", ["copy:dist", "ts:dev", "dts", "watch:dev"]);
+    grunt.registerTask("default", ["copy:dist", "ts:dev", "watch:dev"]);
 
     grunt.registerTask("release", ["clean:release", "ts:release", "bowercopy", "uglify:release", "copy:release", "remove:release", "replace:release"]);
 
     grunt.registerTask("lint", ["tslint"]);
 
-}
+};
