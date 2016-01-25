@@ -2,6 +2,21 @@
 
 
 import {core} from "../module";
+/*import {Inject, Provider} from "../../../decorators";
+
+@Inject()
+@Provider(core, "SettingsService")
+class Settings {
+	private route = 'apple';
+	
+	constructor() {
+
+	}
+	
+	public $get() {
+
+	}
+}*/
 
 core.provider("SettingsService", ()=>{
 	var route = 'apple';
