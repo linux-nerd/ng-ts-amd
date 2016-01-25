@@ -1,23 +1,22 @@
 {
   "rules": {
     "align": [
-      true,
-      "parameters",
+      false,
       "arguments",
       "statements"
     ],
     "ban": false,
     "class-name": true,
     "comment-format": [
-      true,
+      false,
       "check-space",
       "check-lowercase"
     ],
     "curly": true,
-    "eofline": true,
+    "eofline": false,
     "forin": true,
     "indent": [
-      true,
+      false,
       "spaces"
     ],
     "interface-name": true,
@@ -25,12 +24,12 @@
     "label-position": true,
     "label-undefined": true,
     "max-line-length": [
-      true,
+      false,
       140
     ],
     "member-access": true,
     "member-ordering": [
-      true,
+      false,
       "public-before-private",
       "static-before-instance",
       "variables-before-functions"
@@ -49,7 +48,7 @@
       "trace"
     ],
     "no-construct": true,
-    "no-constructor-vars": true,
+    "no-constructor-vars": false,
     "no-debugger": true,
     "no-duplicate-key": true,
     "no-duplicate-variable": true,
@@ -59,26 +58,26 @@
     "no-internal-module": true,
     "no-require-imports": true,
     "no-shadowed-variable": true,
-    "no-string-literal": true,
+    "no-string-literal": false,
     "no-switch-case-fall-through": true,
-    "no-trailing-whitespace": true,
+    "no-trailing-whitespace": false,
     "no-unreachable": true,
     "no-unused-expression": true,
     "no-unused-variable": true,
     "no-use-before-declare": true,
-    "no-var-keyword": true,
+    "no-var-keyword": false,
     "no-var-requires": true,
     "object-literal-sort-keys": true,
     "one-line": [
       true,
       "check-open-brace",
       "check-catch",
-      "check-else",
-      "check-whitespace"
+      "check-else"
     ],
     "quotemark": [
-      true,
+      false,
       "double",
+      "single",
       "avoid-escape"
     ],
     "radix": true,
@@ -96,7 +95,7 @@
       "allow-null-check"
     ],
     "typedef": [
-      true,
+      false,
       "call-signature",
       "parameter",
       "property-declaration",
@@ -104,7 +103,7 @@
       "member-variable-declaration"
     ],
     "typedef-whitespace": [
-      true,
+      false,
       {
         "call-signature": "nospace",
         "index-signature": "nospace",
@@ -114,18 +113,18 @@
       }
     ],
     "use-strict": [
-      true,
+      false,
       "check-module",
       "check-function"
     ],
     "variable-name": [
-      true,
+      false,
       "check-format",
       "allow-leading-underscore",
       "ban-keywords"
     ],
     "whitespace": [
-      true,
+      false,
       "check-branch",
       "check-decl",
       "check-operator",

@@ -41,8 +41,75 @@ function Inject(): Function{
         $inject = $inject.concat(deps);
         target.prototype.$inject = $inject;
         target.$inject = $inject;
-    }
+    };
 }
 
-export {Inject};
+
+
+
+/**
+ * @name Controller
+ * @description This will register controller on the passed module.
+ * @param  {ng.IModule} module         module on which the controller has to be registered.
+ * @param  {string}     controllerName name of the controller that  has to be registered.
+ * @return {Function}   
+ *
+ * @example
+ * ==============ctrl.ts================
+ * @Controller(module, 'ctrlName')
+ * class Ctrl{
+ *     constructor(){
+ *     }
+ * }
+ */
+function Controller(module: ng.IModule, controllerName: string): Function {
+    return (target: Function) => {
+        module.controller(controllerName, target);
+    };
+}
+
+
+/**
+ * @name Service
+ * @description This will register service on the passed module.
+ * @param  {ng.IModule} module      module on which the service has to be registered.
+ * @param  {string}     serviceName name of the service that  has to be registered.
+ * @return {Function}     
+ *
+ * @example
+ * ==============ctrl.ts================
+ * @Service(module, 'serviceName')
+ * class SomeService{
+ *     constructor(){
+ *     }
+ * }
+ */
+function Service(module: ng.IModule, serviceName: string): Function {
+    return (target: Function) => {
+        module.service(serviceName, target);
+    };
+}
+
+
+/**
+ * @name Provider
+ * @description This will register Provider on the passed module.
+ * @param  {ng.IModule} module      module on which the service has to be registered.
+ * @param  {string}     providerName name of the provider that  has to be registered.
+ * @return {Function}     
+ *
+ * @example
+ * ==============ctrl.ts================
+ * @Provider(module, 'providerName')
+ * class SomeService{
+ *     constructor(){
+ *     }
+ * }
+ */
+function Provider(module: ng.IModule, providerName: string): Function {
+    return (target: Function) => module.provider(providerName, target);
+}
+
+
+export {Inject, Controller, Service, Provider};
 
