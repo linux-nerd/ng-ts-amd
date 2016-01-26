@@ -33,6 +33,7 @@ function config($stateProvider: ng.ui.IStateProvider, $locationProvider: ng.ILoc
 // inject the dependencies
 config.$inject = ["$stateProvider", "$locationProvider"];
 
+
 bootStrapApp(app);
 
 export {app};

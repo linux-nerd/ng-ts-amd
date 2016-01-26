@@ -10,7 +10,10 @@ export default function route($stateProvider: ng.ui.IStateProvider): void{
             resolve: {
                 loadController: ['$ocLazyLoad', '$q', function($ocLazyLoad: oc.ILazyLoad, $q: ng.IQService): ng.IPromise<string> {
                     let deferred = $q.defer();
-                    require(["./components/core/module", "./components/core/controllers/home"], () => {
+                    require(["./components/core/module", 
+                            "./components/core/controllers/home",
+                            "./components/core/directives/anchor-directive",
+                            "./components/core/filters/home-filter"], () => {
                         $ocLazyLoad.inject('webApp.core');
                         deferred.resolve();
                     });
