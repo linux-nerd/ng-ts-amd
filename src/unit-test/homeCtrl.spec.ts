@@ -35,7 +35,7 @@ describe("homeController", ()=>{
 		
 	}));
 
-	it("should pass", () => {
-		expect("foo").toEqual("foo");
+	it("should have goToState method", () => {
+		expect(homeCtrl.goToState).toBeDefined();
 	});
 });
