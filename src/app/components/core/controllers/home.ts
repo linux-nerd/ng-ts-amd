@@ -16,7 +16,7 @@ class Home{
 	
 	
 	constructor(private $state: ng.ui.IStateService, private utilityService) {
-		utilityService.logSomething("abc");
+		utilityService.logSomething(this.message);
 	}
 
 	/**

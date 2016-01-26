@@ -91,25 +91,5 @@ function Service(module: ng.IModule, serviceName: string): Function {
 }
 
 
-/**
- * @name Provider
- * @description This will register Provider on the passed module.
- * @param  {ng.IModule} module      module on which the service has to be registered.
- * @param  {string}     providerName name of the provider that  has to be registered.
- * @return {Function}     
- *
- * @example
- * ==============ctrl.ts================
- * @Provider(module, 'providerName')
- * class SomeService{
- *     constructor(){
- *     }
- * }
- */
-function Provider(module: ng.IModule, providerName: string): Function {
-    return (target: Function) => module.provider(providerName, target);
-}
-
-
-export {Inject, Controller, Service, Provider};
+export {Inject, Controller, Service};
 
