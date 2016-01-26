@@ -91,5 +91,30 @@ function Service(module: ng.IModule, serviceName: string): Function {
 }
 
 
-export {Inject, Controller, Service};
+function Directive(module: ng.IModule, directiveName, directiveDefinitionObject: any): Function{
+    return (target: Function) => {
+        for(let key in directiveDefinitionObject) {
+            if(directiveDefinitionObject.hasOwnProperty(key)){
+                target.prototype[key] = directiveDefinitionObject[key];
+            }
+        }
+        
+        //register a directive
+        module.directive(directiveName, target.factory());
+    };
+}
+
+function Filter(module: ng.IModule, filterName: string): Function{
+    return (target: Function): void => {
+        let fn = () => {
+            let instance = new target();
+            return instance.filter;
+        };
+        
+        module.filter(filterName, fn);
+    };
+}
+
+
+export {Inject, Controller, Service, Directive, Filter};
 
