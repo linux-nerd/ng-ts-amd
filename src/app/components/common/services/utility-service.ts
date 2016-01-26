@@ -1,10 +1,10 @@
 /// <reference path="../../../../../typings/tsd.d.ts" />
 
-import {common} from "../module";
+//import {common} from "../module";
 
 class Utility{
 	constructor(){
-
+		this.logSomething("hello World");
 	}
 
 	public logSomething(sm: string): void{

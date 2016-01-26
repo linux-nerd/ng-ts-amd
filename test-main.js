@@ -32,13 +32,14 @@ require.config({
   // we have to kickoff jasmine, as it is asynchronous
   callback: window.__karma__.start,
   paths: {
+    jquery: "/base/bower_components/jquery/jquery",
     angular: '/base/bower_components/angular/angular',
     angularMocks: '/base/bower_components/angular-mocks/angular-mocks',
     "uiRouter": "/base/bower_components/angular-ui-router/release/angular-ui-router",
     "ocLazyload": "/base/bower_components/oclazyload/dist/ocLazyLoad"
   },
   shim: {
-    angular: { exports: 'angular' },
+    angular: { exports: 'angular', deps: ["jquery"] },
     angularMocks: { deps: ['angular'] },
     "uiRouter": {
         deps: ["angular"]
