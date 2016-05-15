@@ -92,7 +92,7 @@ function Service(module: ng.IModule, serviceName: string): Function {
 
 
 function Directive(module: ng.IModule, directiveName, directiveDefinitionObject: any): Function{
-    return (target: Function) => {
+    return (target: any) => {
         for(let key in directiveDefinitionObject) {
             if(directiveDefinitionObject.hasOwnProperty(key)){
                 target.prototype[key] = directiveDefinitionObject[key];
