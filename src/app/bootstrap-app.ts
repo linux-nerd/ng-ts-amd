@@ -13,13 +13,13 @@
  * bootStrapApp(webAppModule);
  */
 export default function bootStrapApp(app : angular.IModule): void{
-	//wait for the document to load
-    angular.element(document).ready(() => {
+	// wait for the document to load
+    angular.element(document).ready((): void => {
 
-    	//cache the reference to html DOM in a variable
+    	// cache the reference to html DOM in a variable
         var $html = angular.element('html');
 
-        //bootstrap webApp module manually
-        angular.bootstrap($html, [app['name']]);
+        // bootstrap webApp module manually
+        angular.bootstrap($html, [app.name]);
     });
 }

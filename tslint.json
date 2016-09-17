@@ -10,22 +10,21 @@
     "class-name": true,
     "comment-format": [
       true,
-      "check-space",
       "check-lowercase"
     ],
     "curly": true,
-    "eofline": true,
+    "eofline": false,
     "forin": true,
     "indent": [
       true,
-      "spaces"
+      "4"
     ],
     "interface-name": true,
     "jsdoc-format": true,
     "label-position": true,
     "label-undefined": true,
     "max-line-length": [
-      true,
+      false,
       140
     ],
     "member-access": true,
@@ -49,7 +48,7 @@
       "trace"
     ],
     "no-construct": true,
-    "no-constructor-vars": true,
+    "no-constructor-vars": false,
     "no-debugger": true,
     "no-duplicate-key": true,
     "no-duplicate-variable": true,
@@ -77,7 +76,7 @@
       "check-whitespace"
     ],
     "quotemark": [
-      true,
+      false,
       "double",
       "avoid-escape"
     ],
@@ -125,7 +124,7 @@
       "ban-keywords"
     ],
     "whitespace": [
-      true,
+      false,
       "check-branch",
       "check-decl",
       "check-operator",
