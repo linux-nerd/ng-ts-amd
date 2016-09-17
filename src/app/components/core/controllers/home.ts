@@ -4,19 +4,19 @@
 import {core} from "../module";
 
 //import "../../common/services/utility-service";
-import {Inject} from "../../../decorators";
+import {Inject, Controller} from "../../../decorators";
 
 /**
  * @name Home
  */
+@Controller(core, "HomeCtrl")
 @Inject()
 class Home{
 	private message = "I am home Controller";
-
-	//inject the dependencies
-	//static $inject = ["$state", "utilityService"];
-	constructor(private $state: ng.ui.IStateService, utilityService) {
-		utilityService.logSomething("abc");
+	
+	
+	constructor(private $state: ng.ui.IStateService, private utilityService) {
+		utilityService.logSomething(this.message);
 	}
 
 	/**

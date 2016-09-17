@@ -1,4 +1,5 @@
 /// <reference path="../../typings/tsd.d.ts" />
+"use strict";
 
 import * as angular from "angular";
 import "uiRouter";
@@ -31,6 +32,7 @@ function config($stateProvider: ng.ui.IStateProvider, $locationProvider: ng.ILoc
 
 // inject the dependencies
 config.$inject = ["$stateProvider", "$locationProvider"];
+
 
 bootStrapApp(app);
 

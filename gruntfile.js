@@ -17,6 +17,7 @@ module.exports = function (grunt) {
             // these are the default options to the typescript compiler for grunt-ts:
             // see `tsc --help` for a list of supported options.
             options: {
+                emitDecoratorMetadata: true,
                 experimentalDecorators: true,
                 compile: true,                 // perform compilation. [true (default) | false]
                 comments: false,               // same as !removeComments. [true | false (default)]
@@ -122,6 +123,14 @@ module.exports = function (grunt) {
                     src: "**/*.js",
                     dest: "release"
                 }]
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'dist',
+                    src: "**/*.js",
+                    dest: "dist"
+                }]  
             }
         },
 
@@ -246,7 +255,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("dts", ["generateDts", "updateDts"]);
 
-    grunt.registerTask("default", ["copy:dist", "ts:dev", "watch:dev"]);
+    grunt.registerTask("default", ["copy:dist", "lint", "ts:dev", "uglify:dist", "watch:dev"]);
 
     grunt.registerTask("release", ["clean:release", "ts:release", "bowercopy", "uglify:release", "copy:release", "remove:release", "replace:release"]);
 
