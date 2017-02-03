@@ -255,7 +255,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask("dts", ["generateDts", "updateDts"]);
 
-    grunt.registerTask("default", ["copy:dist", "lint", "ts:dev", "uglify:dist", "watch:dev"]);
+    grunt.registerTask("default", ["copy:dist", "lint", "ts:dev", "watch:dev"]);
 
     grunt.registerTask("release", ["clean:release", "ts:release", "bowercopy", "uglify:release", "copy:release", "remove:release", "replace:release"]);
 

@@ -105,7 +105,7 @@ function Directive(module: ng.IModule, directiveName, directiveDefinitionObject:
 }
 
 function Filter(module: ng.IModule, filterName: string): Function{
-    return (target: Function): void => {
+    return (target: any): void => {
         let fn = () => {
             let instance = new target();
             return instance.filter;

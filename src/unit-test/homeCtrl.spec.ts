@@ -38,4 +38,12 @@ describe("homeController", ()=>{
 	it("should have goToState method", () => {
 		expect(homeCtrl.goToState).toBeDefined();
 	});
+	
+	it("should have message defined", () => {
+		expect(homeCtrl.message).toBeDefined();
+	});
+
+	it("should have message of type string", () => {
+		expect(typeof homeCtrl.message).toBe('string');
+	});
 });
