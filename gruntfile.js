@@ -100,8 +100,8 @@ module.exports = function (grunt) {
         //watch files
         watch: {
             dev: {
-                files: ["src/**/*.ts", "src/**/*.html"],
-                tasks: ["copy:dist", "ts:dev"]
+                files: ["src/**/*.ts", "src/**/*.html", "src/**/*.scss"],
+                tasks: ["copy:dist", "sass", "ts:dev"]
                 //tasks: ["ts:dev", "copyHtml", "concat", "clean:dev"]
             }
         },
