@@ -2,14 +2,6 @@ module.exports = function (grunt) {
     "use strict";
     var fs = require("fs");
     var files = [];
-    var list = function (path) {
-        fs.readdirSync(path).forEach(function (file) {
-            if(fs.lstatSync(path + '/' +file).isDirectory())
-                list(path + '/' +file);
-            else
-                files.push({name: file});
-        });
-    };
 
     grunt.initConfig({
         ts: {
@@ -218,23 +210,16 @@ module.exports = function (grunt) {
             }
         },
 
-        //create .d.ts file
-        "file-creator": {
-            dev: {
-                "typings/custom.d.ts": function(fs, fd, done){
-                    var createdText = "";
-                    //loop over files variable
-                    files.forEach(function(val){
-                        createdText += "///<reference path='./custom/" + val.name + "' />\n"
-                    });
-
-                    fs.writeSync(fd, createdText);
-                    done();
+        sass: {
+            dist: {
+                files: {
+                    'dist/style/main.css': 'src/style/main.scss'
                 }
             }
         }
     });
 
+    //load grunt tasks
     grunt.loadNpmTasks("grunt-ts");
     grunt.loadNpmTasks("grunt-contrib-copy");
     grunt.loadNpmTasks("grunt-contrib-watch");
@@ -244,18 +229,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-bowercopy');
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-tslint');
-    grunt.loadNpmTasks('grunt-file-creator');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
 
-    grunt.registerTask("listFiles", 'list files in a dir', function(){
-        list("typings/custom");
-    });
-    grunt.registerTask("generateDts", ["copy:definitelyTyped", "clean:dev", "listFiles"]);
-    grunt.registerTask("updateDts", ["file-creator:dev"]);
-
-    grunt.registerTask("dts", ["generateDts", "updateDts"]);
-
-    grunt.registerTask("default", ["copy:dist", "lint", "ts:dev", "watch:dev"]);
+    //register custom tasks
+    grunt.registerTask("default", ["copy:dist", "lint", "ts:dev", "sass", "watch:dev"]);
 
     grunt.registerTask("release", ["clean:release", "ts:release", "bowercopy", "uglify:release", "copy:release", "remove:release", "replace:release"]);
 
